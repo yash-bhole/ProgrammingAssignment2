@@ -8,14 +8,14 @@
 
 makeCacheMatrix <- function(x = matrix()) {
       m <- NULL
-      set <- function(y) {
+      set <- function(y) {                         ## stores the given matrix and initialises the variable m to be used in different envirnoment
             x <<- y
             m <<- NULL
       }
       get <- function() x
-      setinverse <- function(solve) m <<- solve
-      getinverse <- function() m
-      list(set = set, get = get,
+      setinverse <- function(solve) m <<- solve    ## computes inverse by using solve function
+      getinverse <- function() m                   ## stores the value m      
+      list(set = set, get = get,                   ## creates a list with the four functions      
            setinverse = setinverse,
            getinverse = getinverse)
 }
@@ -26,13 +26,13 @@ makeCacheMatrix <- function(x = matrix()) {
 ## x$setmean(m) stores it in the object m in makeCacheMatrix.
 
 cacheSolve <- function(x, ...) {
-      m <- x$getinverse()
-      if(!is.null(m)) {
+      m <- x$getinverse()                          ## gets the value of m from cache
+      if(!is.null(m)) {                            ## checks if inverse is already calculated and if yes, returns the value of m 
             message("getting cached data")
             return(m)
       }
-      data <- x$get()
-      m <- solve(data, ...)
+      data <- x$get()                              ## gets the given matrix and assigns to variable data
+      m <- solve(data, ...)                        ## computes the value of m and stores it in setinverse in the list 
       x$setinverse(m)
       m
 }
